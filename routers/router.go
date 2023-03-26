@@ -18,4 +18,12 @@ func RouteHandlers(r *gin.Engine) {
 		bangunDatar.GET("/persegi-panjang", controllerInstance.PersegiPanjangController.Hitung)
 		bangunDatar.GET("/lingkaran", controllerInstance.LingkaranController.Hitung)
 	}
+
+	categories := r.Group("/categories")
+	categories.GET("/", controllerInstance.CategoryController.GetAll)
+	categories.POST("/", controllerInstance.CategoryController.Insert)
+	categories.PUT("/:id", controllerInstance.CategoryController.Update)
+	categories.GET("/:id", controllerInstance.GetById)
+	categories.DELETE("/:id", controllerInstance.Delete)
+
 }

@@ -1,6 +1,7 @@
 package services
 
 import (
+	"quiz3-rizqyep/repository"
 	"sync"
 )
 
@@ -9,8 +10,10 @@ type servicesPool struct {
 	PersegiPanjangService
 	PersegiService
 	LingkaranService
+	CategoryService
 }
 
+var repositoryInstance = repository.NewRepository()
 var serviceInstance *servicesPool
 var once sync.Once
 
@@ -27,5 +30,6 @@ func NewServiceInstance() *servicesPool {
 		PersegiPanjangService:   NewPersegiPanjangService(),
 		PersegiService:          NewPersegiService(),
 		LingkaranService:        NewLingkaranService(),
+		CategoryService:         NewCategoryService(repositoryInstance.CategoryRepository),
 	}
 }

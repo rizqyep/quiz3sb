@@ -10,6 +10,7 @@ type controllersPool struct {
 	PersegiController
 	PersegiPanjangController
 	LingkaranController
+	CategoryController
 }
 
 var serviceInstance = services.InitServiceInstance()
@@ -29,5 +30,6 @@ func NewControllerInstance() *controllersPool {
 		PersegiController:          NewPersegiController(serviceInstance.PersegiService),
 		PersegiPanjangController:   NewPersegiPanjangController(serviceInstance.PersegiPanjangService),
 		LingkaranController:        NewLingkaranController(serviceInstance.LingkaranService),
+		CategoryController:         NewCategoryController(serviceInstance.CategoryService),
 	}
 }
