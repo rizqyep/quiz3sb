@@ -11,6 +11,7 @@ type servicesPool struct {
 	PersegiService
 	LingkaranService
 	CategoryService
+	BookService
 }
 
 var repositoryInstance = repository.NewRepository()
@@ -31,5 +32,6 @@ func NewServiceInstance() *servicesPool {
 		PersegiService:          NewPersegiService(),
 		LingkaranService:        NewLingkaranService(),
 		CategoryService:         NewCategoryService(repositoryInstance.CategoryRepository),
+		BookService:             NewBookService(repositoryInstance.BookRepository),
 	}
 }

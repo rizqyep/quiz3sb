@@ -52,7 +52,7 @@ func (repository *categoryRepository) GetAll() (err error, results []entities.Ca
 }
 
 func (repository *categoryRepository) GetById(id int) (err error, result entities.Category) {
-	sqlStatement := `SELECT id, email FROM users WHERE id=$1;`
+	sqlStatement := `SELECT * FROM categories WHERE id=$1;`
 
 	row := repository.db.QueryRow(sqlStatement, id)
 	switch err := row.Scan(&result.ID, &result.Name, &result.CreatedAt, &result.UpdatedAt); err {
