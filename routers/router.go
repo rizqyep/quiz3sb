@@ -20,25 +20,29 @@ func RouteHandlers(r *gin.Engine) {
 	}
 
 	categories := r.Group("/categories")
+	categories.GET("/", controllerInstance.CategoryController.GetAll)
+	categories.GET("/:id", controllerInstance.CategoryController.GetById)
+
 	categories.Use(gin.BasicAuth(gin.Accounts{
 		"admin":  "password",
 		"editor": "secret",
 	}))
-	categories.GET("/", controllerInstance.CategoryController.GetAll)
+
 	categories.POST("/", controllerInstance.CategoryController.Insert)
 	categories.PUT("/:id", controllerInstance.CategoryController.Update)
-	categories.GET("/:id", controllerInstance.CategoryController.GetById)
 	categories.DELETE("/:id", controllerInstance.CategoryController.Delete)
 
 	books := r.Group("/books")
-	books.Use(gin.BasicAuth(gin.Accounts{
+	books.GET("/", controllerInstance.BookController.GetAll)
+	books.GET("/:id", controllerInstance.BookController.GetById)
+	r.Use(gin.BasicAuth(gin.Accounts{
 		"admin":  "password",
 		"editor": "secret",
 	}))
-	books.GET("/", controllerInstance.BookController.GetAll)
+
 	books.POST("/", controllerInstance.BookController.Insert)
 	books.PUT("/:id", controllerInstance.BookController.Update)
-	books.GET("/:id", controllerInstance.BookController.GetById)
+
 	books.DELETE("/:id", controllerInstance.BookController.Delete)
 
 }
