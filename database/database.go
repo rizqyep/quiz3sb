@@ -3,10 +3,11 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"quiz3-rizqyep/utils"
+	"os"
 	"sync"
 
 	"github.com/gobuffalo/packr/v2"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	migrate "github.com/rubenv/sql-migrate"
 )
@@ -17,9 +18,18 @@ var (
 )
 
 func NewDBConnection() *sql.DB {
-	envMap := utils.InitEnv()
+	// envMap := utils.InitEnv()
+	// psqlInfo := fmt.Sprintf("host=%v port=%v user=%v password=%v dbname=%v sslmode=disable",
+	// 	envMap["PGHOST"], envMap["PGPORT"], envMap["PGUSER"], envMap["PGPASSWORD"], envMap["PGDATABASE"])
+	err := godotenv.Load("config/.env")
+	if err != nil {
+		fmt.Println("failed load file environment")
+	} else {
+		fmt.Println("successfully read file environment")
+	}
+
 	psqlInfo := fmt.Sprintf("host=%v port=%v user=%v password=%v dbname=%v sslmode=disable",
-		envMap["PGHOST"], envMap["PGPORT"], envMap["PGUSER"], envMap["PGPASSWORD"], envMap["PGDATABASE"])
+		os.Getenv("PGHOST"), os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
 
 	db, err := sql.Open("postgres", psqlInfo)
 
